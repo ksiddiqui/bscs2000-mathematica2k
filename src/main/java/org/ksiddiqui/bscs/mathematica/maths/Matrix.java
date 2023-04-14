@@ -1,5 +1,7 @@
 package org.ksiddiqui.bscs.mathematica.maths;
 
+import org.ksiddiqui.bscs.mathematica.maths.exceptions.MatrixException;
+
 import java.io.Serializable;
 
 
@@ -337,13 +339,6 @@ public class Matrix implements Serializable {
     }
 
 
-}
-
-
-class MatrixException extends Exception {
-    MatrixException(String exceptionNo) {
-        super(exceptionNo);
-    }
 }
 
 

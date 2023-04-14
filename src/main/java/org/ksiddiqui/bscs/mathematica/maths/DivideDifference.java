@@ -1,5 +1,7 @@
 package org.ksiddiqui.bscs.mathematica.maths;
 
+import org.ksiddiqui.bscs.mathematica.maths.exceptions.DivideDifferenceException;
+
 import java.io.Serializable;
 import java.util.Vector;
 
@@ -213,13 +215,6 @@ public class DivideDifference implements Serializable {
         return obj[i].doubleValue();
     }
 
-}
-
-
-class DivideDifferenceException extends Exception {
-    DivideDifferenceException(String exceptionNo) {
-        super(exceptionNo);
-    }
 }
 
 

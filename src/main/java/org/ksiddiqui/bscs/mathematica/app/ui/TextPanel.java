@@ -1,4 +1,4 @@
-package org.ksiddiqui.bscs.mathematica.ui;
+package org.ksiddiqui.bscs.mathematica.app.ui;
 
 import javax.swing.*;
 import javax.swing.border.Border;

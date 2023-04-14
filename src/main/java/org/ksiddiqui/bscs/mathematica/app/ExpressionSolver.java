@@ -1,4 +1,4 @@
-package org.ksiddiqui.bscs.mathematica;
+package org.ksiddiqui.bscs.mathematica.app;
 
 /******************************************************************************************
  *                                                                                         *
@@ -387,15 +387,3 @@ public class ExpressionSolver {
 // END OF CLASS
 }
 
-class ExpressionSolverException extends Exception {
-
-    static String exceptionNumber;
-
-    ExpressionSolverException(String exceptionNo) {
-        exceptionNumber = exceptionNo;
-    }
-
-    public String getException() {
-        return exceptionNumber;
-    }
-}

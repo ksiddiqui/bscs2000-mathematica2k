@@ -1,229 +1,12 @@
-package org.ksiddiqui.bscs.mathematica;
-
-import org.ksiddiqui.bscs.mathematica.maths.FunctionGrapher;
-import org.ksiddiqui.bscs.mathematica.ui.StylisPanel;
+package org.ksiddiqui.bscs.mathematica.app;
 
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
-public class Mathematica {
-    static JFrame frame;
-    static JTabbedPane MainTab;
-
-    static JToggleButton fgButton;
-    static FunctionGrapher fg;
-
-    public static void main(String s[]) {
-        frame = new JFrame("Mathematica 2000");
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-        Container mC = frame.getContentPane();
-        frame.setSize(620, 500);
-        frame.setResizable(false);
-
-//        ImageIcon animation = new ImageIcon("Mathematica.jpg");
-//        JLabel TitleLabel = new JLabel(animation);
-//        TitleLabel.setBorder((Border) new BevelBorder(BevelBorder.RAISED));
-        JLabel mainLabel = new JLabel(" MATHEMATICA 2000");
-        mainLabel.setOpaque(true);
-        mainLabel.setBackground(Color.black);
-        mainLabel.setForeground(Color.white);
-        mainLabel.setFont(new Font("Serif", Font.BOLD, 42));
-        JButton aboutButton = new JButton("About");
-        aboutButton.setBackground(Color.black);
-        aboutButton.setForeground(Color.white);
-        aboutButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                about();
-            }
-        });
-        JPanel m1 = new JPanel(new BorderLayout());
-        m1.add(mainLabel, BorderLayout.CENTER);
-        m1.add(aboutButton, BorderLayout.EAST);
-        mC.add(m1, BorderLayout.NORTH);
-
-        fg = null;
-        fgButton = new JToggleButton("Show Function Grapher");
-        fgButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                fgButton_command();
-            }
-        });
-        JPanel fgPanel = new JPanel(new BorderLayout());
-        fgPanel.add(fgButton, BorderLayout.EAST);
-        mC.add(fgPanel, BorderLayout.SOUTH);
-
-
-        MainTab = new JTabbedPane(SwingConstants.BOTTOM);
-        Intro intro = new Intro();
-        new Calculator();
-        new RootSolverAgent();
-        new LinearSystemSolverAgent();
-        new InterpolationSolverAgent();
-        MainTab.setSelectedIndex(0);
-
-        MainTab.setBorder((Border) new EmptyBorder(5, 5, 5, 5));
-        mC.add(MainTab, BorderLayout.CENTER);
-
-        frame.setVisible(true);
-        try {
-            intro.styleTextList.start();
-        } catch (Exception e) {
-            System.out.println("Error");
-        }
-        MainTab.repaint();
-    }
-
-    private static void fgButton_command() {
-        if (fg == null) fg = new FunctionGrapher(null);
-        else {
-            fg.exit();
-            fg = null;
-        }
-    }
-
-    private static void about() {
-        ImageIcon animation = new ImageIcon("k.class");
-        JLabel TitleLabel = new JLabel(animation);
-        TitleLabel.setBorder((Border) new BevelBorder(BevelBorder.LOWERED));
-        //animation.setImageObserver(TitleLabel);
-
-        String data = "A project of\n" +
-                "      NUMERICAL COMPUTNG\n" +
-                "     ====================\n\n" +
-                "Supervised by : Mr. Shahid Qureshi\n" +
-                "in year 2000, semester II.\n\n" +
-                "Programmed and designed by : Kashif Ali Siddiqui\n" +
-                "Roll # 20, section B, BS-2\n" +
-                "Department Of Computer Science\n" +
-                "University Of Karachi";
-        JTextPane aboutText = new JTextPane();
-        aboutText.setText(data);
-        aboutText.setEditable(false);
-        JScrollPane dataPane = new JScrollPane(aboutText);// dataPane.setSize();
-
-        Object[] obj = new Object[2];
-        obj[0] = TitleLabel;
-        obj[1] = dataPane;
-
-        JOptionPane.showOptionDialog(null, obj, "About", JOptionPane.CLOSED_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
-    }
-
-}
-
-
-class Intro {
-
-    StylisPanel styleTextList;
-
-    Intro() {
-        JPanel mp = new JPanel(new GridLayout(4, 1));
-        JPanel m1 = new JPanel(new BorderLayout());
-        JPanel m2 = new JPanel(new GridLayout(3, 1));
-        m1.setBorder((Border) new EmptyBorder(2, 2, 2, 1));
-        m2.setBorder((Border) new BevelBorder(BevelBorder.RAISED));
-
-        String[] list = new String[17];
-        list[0] = " A Project Of";
-        list[1] = " NUMERICAL COMPUTING";
-        list[2] = " =======================";
-        list[3] = " ";
-        list[4] = " To";
-        list[5] = " Mr.Shahid Qureshi";
-        list[6] = " ----------------------";
-        list[7] = " course supervisor of";
-        list[8] = " Numerical Computing ";
-        list[9] = " in year 2000.";
-        list[10] = " ";
-        list[11] = " programmed by: ";
-        list[12] = " Kashif Ali Siddiqui";
-        list[13] = " roll # 20";
-        list[14] = " BS-2(B), 2000";
-        list[15] = " ";
-        list[16] = " ";
-        try {
-            styleTextList = new StylisPanel();
-            styleTextList.setBackground(Color.black);
-            styleTextList.setMainText("MATHEMATICA 2000", Color.darkGray, 10, 50, new Font("New Times Roman", Font.BOLD, 45));
-            styleTextList.setTextList(list, Color.yellow, 220, 20, new Font("Serif", Font.BOLD, 20));
-            styleTextList.setShadow(5, 15, 0, 0, Color.gray);
-            styleTextList.setAnimation(50, false);
-        } catch (Exception e) {
-        }
-
-        ImageIcon closeicon = new ImageIcon("car.gif");
-
-        JLabel about = new JLabel("Programmed by KASHIF ALI SIDDIQUI", SwingConstants.CENTER);
-        about.setBorder((Border) new EtchedBorder());
-
-        JButton Win = new JButton("Selecting Windows GUI");
-        JButton Met = new JButton("Selecting Java Metal GUI");
-        JButton Mot = new JButton("Selecting Motif GUI");
-        JButton Close = new JButton("Close", closeicon);
-
-        m2.add(Win);
-        m2.add(Met);
-        m2.add(Mot);
-        m1.add(Close, BorderLayout.EAST);
-
-        mp.setBorder((Border) new EmptyBorder(5, 5, 5, 5));
-        mp.add(styleTextList);
-        mp.add(about);
-        mp.add(m2);
-        mp.add(m1);
-
-        Win.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-                    SwingUtilities.updateComponentTreeUI(Mathematica.frame);
-                } catch (Exception ex) {
-                    System.out.println("Error in Look and Feel !!");
-                }
-            }
-        });
-        Met.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-                    SwingUtilities.updateComponentTreeUI(Mathematica.frame);
-                } catch (Exception ex) {
-                    System.out.println("Error in Look and Feel !!");
-                }
-            }
-        });
-        Mot.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-                    SwingUtilities.updateComponentTreeUI(Mathematica.frame);
-                } catch (Exception ex) {
-                    System.out.println("Error in Look and Feel !!");
-                }
-            }
-        });
-        Close.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-
-
-        Mathematica.MainTab.addTab("Mathematica", mp);
-    }
-
-}
-
-
-class Calculator {
+public class Calculator {
 
     static JLabel Display;
     static JTextArea History;
@@ -236,7 +19,7 @@ class Calculator {
     static int noOfChar;
     static boolean radians;
 
-    Calculator() {
+    public Calculator() {
         number = 0.0;
         decipoint = false;
         opperator = '+';
@@ -282,7 +65,7 @@ class Calculator {
         ImageIcon image = new ImageIcon("calculator.gif");
         JLabel imglabel = new JLabel(image);
 
-        // Display Label settings       
+        // Display Label settings
         Display.setBorder((Border) new EtchedBorder());
 
         // NumKeys Initialization
@@ -320,7 +103,7 @@ class Calculator {
         numKeys[11].setBackground(Color.yellow);
         numKeys[11].setFont(font1);
 
-        // oppKeys Initialization          
+        // oppKeys Initialization
         oppPad.setBorder((Border) new BevelBorder(BevelBorder.RAISED));
         oppKeys[0] = new JButton("+");  // oppKeys[0].setMnemonic('+'); oppKeys[0].setActionCommand("+");
         oppKeys[1] = new JButton("-");  // oppKeys[1].setMnemonic('-'); oppKeys[1].setActionCommand("-");
@@ -729,130 +512,5 @@ class Calculator {
 
     }
 
-
-}
-
-
-class ExpressionEvaluator {
-
-    static JTextField expression;
-    static JTextField result;
-    static ExpressionSolver ExpS;
-    static boolean degreeFlag = false;
-    private String Postfix;
-
-    ExpressionEvaluator() {
-        JPanel mp = new JPanel(new BorderLayout());
-        mp.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-        JPanel m1 = new JPanel(new BorderLayout());
-        JPanel m2 = new JPanel(new BorderLayout());
-        JPanel m3 = new JPanel();
-        JPanel m4 = new JPanel();
-        JPanel m5 = new JPanel(new GridLayout(2, 1));
-        JPanel m6 = new JPanel(new GridLayout(1, 2));
-        JPanel m7 = new JPanel(new GridLayout(1, 2));
-        m3.setBorder(new TitledBorder("Type expression"));
-        m4.setBorder(new TitledBorder("Expression Literals Types"));
-        m5.setBorder(new TitledBorder("Result"));
-
-        result = new JTextField(20);
-        expression = new JTextField(40);
-        ImageIcon titleImage = new ImageIcon("expression.gif");
-        JLabel title = new JLabel(titleImage);
-
-        String literalsStr = new String(" - Numeric literals :\n"
-                + "    0,  1,  2,  3, ...,  9\n\n"
-                + " - Opperator literals :\n"
-                + "    +,  -,  *,  /,  \\,  ^\n\n"
-                + " - Bracketing literals :\n"
-                + "    (,  )\n\n"
-                + " - Function literals :\n"
-                + "    sin,  cos,  tan,  asin,  acos,  atan,\n"
-                + "    log,  alog");
-        JTextArea literalsBox = new JTextArea(literalsStr, 6, 20);
-        literalsBox.setEditable(false);
-        literalsBox.setFont(new Font("Serif", Font.BOLD, 13));
-        literalsBox.setBorder(new BevelBorder(BevelBorder.LOWERED));
-
-        JToggleButton degrees = new JToggleButton("Degrees");
-        JButton pasteExp = new JButton("Paste");
-        JButton copyAns = new JButton("Copy");
-        JButton getPostfix = new JButton("Postfix Exp.");
-        JButton go = new JButton("Execute");
-
-        Postfix = new String(" ");
-
-        // Setting Components Events
-
-        getPostfix.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                result.setText("Postfix Notation : " + Postfix);
-            }
-        });
-
-        degrees.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                degreeFlag = !degreeFlag;
-            }
-        });
-
-
-        pasteExp.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                expression.paste();
-            }
-        });
-
-        copyAns.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                result.copy();
-            }
-        });
-
-        go.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                double answer;
-
-                try {
-                    ExpS = new ExpressionSolver(expression.getText(), degreeFlag);
-                    ExpS.toPostfix();
-                    answer = ExpS.Evaluator();
-                    Postfix = ExpS.Postfix();
-                    result.setText(Double.toString(answer));
-                } catch (ExpressionSolverException esE) {
-                    JOptionPane.showMessageDialog(Mathematica.MainTab, esE.getException() + "...\n Check the typed expression", "Error", JOptionPane.ERROR_MESSAGE);
-                } catch (Exception E) {
-                    JOptionPane.showMessageDialog(Mathematica.MainTab, "Unknown error ...\n Check the typed expression", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-        // Setting Components
-
-        m7.add(copyAns);
-        m7.add(getPostfix);
-
-        m6.add(pasteExp);
-        m6.add(degrees);
-
-        m5.add(result);
-        m5.add(m7);
-
-        m4.add(literalsBox);
-        m3.add(expression);
-
-        m2.add(m6, BorderLayout.NORTH);
-        m2.add(go, BorderLayout.CENTER);
-        m2.add(m5, BorderLayout.SOUTH);
-
-        m1.add(m3, BorderLayout.NORTH);
-        m1.add(m2, BorderLayout.CENTER);
-        m1.add(m4, BorderLayout.WEST);
-
-        mp.add(m1, BorderLayout.CENTER);
-        mp.add(title, BorderLayout.EAST);
-
-        Mathematica.MainTab.addTab("Expression Solver", mp);
-    }
 
 }

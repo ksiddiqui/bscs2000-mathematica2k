@@ -1,5 +1,7 @@
 package org.ksiddiqui.bscs.mathematica.maths;
 
+import org.ksiddiqui.bscs.mathematica.maths.exceptions.FunctionException;
+
 import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Stack;
@@ -609,13 +611,6 @@ public class Function implements Serializable {
     }
 
 // END OF CLASS
-}
-
-
-class FunctionException extends Exception {
-    FunctionException(String exceptionNo) {
-        super(exceptionNo);
-    }
 }
 
 

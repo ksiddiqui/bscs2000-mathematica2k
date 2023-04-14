@@ -1,4 +1,4 @@
-package org.ksiddiqui.bscs.mathematica;
+package org.ksiddiqui.bscs.mathematica.app;
 
 import org.ksiddiqui.bscs.mathematica.maths.DifferenceViewer;
 import org.ksiddiqui.bscs.mathematica.maths.InterpolationSolver;
