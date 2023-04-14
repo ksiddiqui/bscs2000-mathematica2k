@@ -4,6 +4,7 @@ import org.ksiddiqui.bscs.mathematica.maths.exceptions.FunctionException;
 
 import java.io.Serializable;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.Stack;
 import java.util.Vector;
 
@@ -117,9 +118,9 @@ public class Function implements Serializable {
         for (int count = 1; count < (totalChars - 1); count++)
             /*START*/ {
             tmpChar = infixCopy[count];
-            str1 = new Character(infixCopy[count - 1]).toString();
-            str2 = new Character(infixCopy[count + 0]).toString();
-            str3 = new Character(infixCopy[count + 1]).toString();
+            str1 = Character.toString(infixCopy[count - 1]);
+            str2 = Character.toString(infixCopy[count + 0]);
+            str3 = Character.toString(infixCopy[count + 1]);
 
 
             /**/
@@ -127,7 +128,7 @@ public class Function implements Serializable {
                 if (state == 2 || state == 3 || state == 4)
                     throw new FunctionException(expressionError);
 
-                opStack.push(new Character(tmpChar));
+                opStack.push(tmpChar);
                 state = 1;
             }
             /**/
@@ -135,10 +136,10 @@ public class Function implements Serializable {
                 if (state == 5)
                     throw new FunctionException(expressionError);
 
-                char chr = ((Character) opStack.pop()).charValue();
+                char chr = (Character) opStack.pop();
                 while (chr != '(') {
                     Postfix = Postfix.concat(String.valueOf(chr));
-                    chr = ((Character) opStack.pop()).charValue();
+                    chr = (Character) opStack.pop();
                 }
 
                 state = 2;
@@ -190,7 +191,7 @@ public class Function implements Serializable {
                     negFlag = false;
                 }
                 numberX = numberX * Math.pow(10, Double.parseDouble(power));
-                Numbers.addElement(new Double(numberX));
+                Numbers.addElement(numberX);
 
                 state = 4;
             }
@@ -207,7 +208,7 @@ public class Function implements Serializable {
                     if (!opStack.empty())
                         pre2 = Precession((Character) opStack.peek());
                 }
-                if (pre1 < 10) opStack.push(new Character(tmpChar));
+                if (pre1 < 10) opStack.push(tmpChar);
                 else {
                     int inc = 0;
                     char ch = 'a';
@@ -231,7 +232,7 @@ public class Function implements Serializable {
                     }
 
                     count = count + inc;
-                    opStack.push(new Character(ch));
+                    opStack.push(ch);
                 }
                 state = 5;
             }
@@ -256,8 +257,8 @@ public class Function implements Serializable {
         if (variables.length != values.length) throw new FunctionException(variablesError);
 
         for (int i = 0; i < variables.length; i++) {
-            htKey = new Character(variables[i]);
-            htValue = new Double(values[i]);
+            htKey = variables[i];
+            htValue = values[i];
             ht.put(htKey, htValue);
         }
 
@@ -266,7 +267,7 @@ public class Function implements Serializable {
         return resultValue;
     }
 
-    public double evaluator(Hashtable values) throws Exception {
+    public double evaluator(Map values) throws Exception {
         if (Postfix == null || Postfix.length() == 0) throw new FunctionException(noParsedExpressinoError);
 
         Stack numbers = new Stack();
@@ -282,80 +283,52 @@ public class Function implements Serializable {
         //System.out.print(Postfix+" : ");
         for (int count = 0; count < Postfix.length(); count++) {
             if (Postfix.charAt(count) >= 'A' && Postfix.charAt(count) <= 'Z') {
-                chrObj = new Character(Postfix.charAt(count));
-                numbers.push((Double) values.get(chrObj));
+                chrObj = Postfix.charAt(count);
+                numbers.push(values.get(chrObj));
             } else if (Postfix.charAt(count) >= numberRepresentative) {
-                numbers.push((Double) Numbers.get(NumberIndex));
+                numbers.push(Numbers.get(NumberIndex));
                 NumberIndex++;
             } else {
-                double n1 = ((Double) numbers.pop()).doubleValue();
+                double n1 = (Double) numbers.pop();
                 double n2 = 0;
                 if ("-+*/^\\".indexOf(Postfix.charAt(count)) != -1)
-                    n2 = ((Double) numbers.pop()).doubleValue();
+                    n2 = (Double) numbers.pop();
 
                 switch (Postfix.charAt(count)) {
-                    case '-': {
+                    case '-' -> {
                         result = n2 - n1;
-                        break;
-                    }
-                    case '+': {
+                    } case '+' -> {
                         result = n2 + n1;
-                        break;
-                    }
-                    case '*': {
+                    } case '*' -> {
                         result = n2 * n1;
-                        break;
-                    }
-                    case '/': {
+                    } case '/' -> {
                         result = n2 / n1;
-                        break;
-                    }
-                    case '^': {
+                    } case '^' -> {
                         result = Math.pow(n2, n1);
-                        break;
-                    }
-                    case '\\': {
+                    } case '\\' -> {
                         result = n2 % n1;
-                        break;
-                    }
-
-                    case 's': {
+                    } case 's' -> {
                         result = Math.sin(mul * n1);
-                        break;
-                    }
-                    case 'c': {
+                    } case 'c' -> {
                         result = Math.cos(mul * n1);
-                        break;
-                    }
-                    case 't': {
+                    } case 't' -> {
                         result = Math.tan(mul * n1);
-                        break;
-                    }
-                    case 'l': {
+                    } case 'l' -> {
                         result = Math.log(n1);
-                        break;
-                    }
-                    case 'a': {
+                    } case 'a' -> {
                         result = mulx * Math.asin(n1);
-                        break;
-                    }
-                    case 'b': {
+                    } case 'b' -> {
                         result = mulx * Math.acos(n1);
-                        break;
-                    }
-                    case 'd': {
+                    } case 'd' -> {
                         result = mulx * Math.atan(n1);
-                        break;
-                    }
-                    case 'e': {
+                    } case 'e' -> {
                         result = Math.exp(n1);
-                        break;
                     }
                 }
-                numbers.push(new Double(result));
+                numbers.push(result);
             }
         }
-        result = ((Double) numbers.pop()).doubleValue();
+        result = (Double) numbers.pop();
         Result = result;
         return result;
     }
@@ -380,7 +353,7 @@ public class Function implements Serializable {
         if (Postfix == null || Postfix.length() == 0) throw new FunctionException(noParsedExpressinoError);
 
         StringBuffer postfixStr = new StringBuffer();
-        int NumberIndex = 0;
+        int numberIndex = 0;
 
         for (int count = 0; count < Postfix.length(); count++) {
             postfixStr = postfixStr.append(' ');
@@ -388,66 +361,38 @@ public class Function implements Serializable {
             if (Postfix.charAt(count) >= 'A' && Postfix.charAt(count) <= 'Z') {
                 postfixStr = postfixStr.append(String.valueOf(Postfix.charAt(count)));
             } else if (Postfix.charAt(count) >= numberRepresentative) {
-                postfixStr = postfixStr.append(((Double) Numbers.get(NumberIndex)).toString());
-                NumberIndex++;
+                postfixStr = postfixStr.append(((Double) Numbers.get(numberIndex)).toString());
+                numberIndex++;
             } else {
                 switch (Postfix.charAt(count)) {
-                    case '-': {
+                    case '-' -> {
                         postfixStr = postfixStr.append('-');
-                        break;
-                    }
-                    case '+': {
+                    } case '+' -> {
                         postfixStr = postfixStr.append('+');
-                        break;
-                    }
-                    case '*': {
+                    } case '*' -> {
                         postfixStr = postfixStr.append('*');
-                        break;
-                    }
-                    case '/': {
+                    } case '/' -> {
                         postfixStr = postfixStr.append('/');
-                        break;
-                    }
-                    case '^': {
+                    } case '^' -> {
                         postfixStr = postfixStr.append('^');
-                        break;
-                    }
-                    case '\\': {
+                    } case '\\' -> {
                         postfixStr = postfixStr.append('\\');
-                        break;
-                    }
-
-                    case 's': {
+                    } case 's' -> {
                         postfixStr = postfixStr.append("Sin");
-                        break;
-                    }
-                    case 'c': {
+                    } case 'c' -> {
                         postfixStr = postfixStr.append("Cos");
-                        break;
-                    }
-                    case 't': {
+                    } case 't' -> {
                         postfixStr = postfixStr.append("Tan");
-                        break;
-                    }
-                    case 'l': {
+                    } case 'l' -> {
                         postfixStr = postfixStr.append("Log");
-                        break;
-                    }
-                    case 'a': {
+                    } case 'a' -> {
                         postfixStr = postfixStr.append("aSin");
-                        break;
-                    }
-                    case 'b': {
+                    } case 'b' -> {
                         postfixStr = postfixStr.append("aCos");
-                        break;
-                    }
-                    case 'd': {
+                    } case 'd' -> {
                         postfixStr = postfixStr.append("aTan");
-                        break;
-                    }
-                    case 'e': {
+                    } case 'e' -> {
                         postfixStr = postfixStr.append("aLog");
-                        break;
                     }
                 }
             }
@@ -518,8 +463,8 @@ public class Function implements Serializable {
         if (variables.length != values.length) throw new FunctionException(variablesError);
 
         for (int i = 0; i < variables.length; i++) {
-            htKey = new Character(variables[i]);
-            htValue = new Double(values[i]);
+            htKey = variables[i];
+            htValue = values[i];
             ht.put(htKey, htValue);
         }
 
@@ -529,22 +474,22 @@ public class Function implements Serializable {
     }
 
     public double firstDerivative(Hashtable values, char variable, double h) throws Exception {
-        Character key = new Character(variable);
+        Character key = variable;
         if (values == null) throw new FunctionException(noVariableError);
         if (!values.containsKey(key)) throw new FunctionException(variableError);
         if (Postfix == null || Postfix.length() == 0) throw new FunctionException(noParsedExpressinoError);
 
         Double _value = (Double) values.get(key);
         double atValue1, atValue2;
-        atValue1 = _value.doubleValue() - h;
-        atValue2 = _value.doubleValue() + h;
+        atValue1 = _value - h;
+        atValue2 = _value + h;
 
         values.remove(key);
-        values.put(key, new Double(atValue1));
+        values.put(key, atValue1);
         double valueAt1 = evaluator(values);
 
         values.remove(key);
-        values.put(key, new Double(atValue2));
+        values.put(key, atValue2);
         double valueAt2 = evaluator(values);
 
         double result = (valueAt2 - valueAt1) / (2 * h);
@@ -561,8 +506,8 @@ public class Function implements Serializable {
         if (variables.length != values.length) throw new FunctionException(variablesError);
 
         for (int i = 0; i < variables.length; i++) {
-            htKey = new Character(variables[i]);
-            htValue = new Double(values[i]);
+            htKey = variables[i];
+            htValue = values[i];
             ht.put(htKey, htValue);
         }
 
@@ -573,27 +518,27 @@ public class Function implements Serializable {
     }
 
     public double secondDerivative(Hashtable values, char variable, double h) throws Exception {
-        Character key = new Character(variable);
+        Character key = variable;
         if (values == null) throw new FunctionException(noVariableError);
         if (!values.containsKey(key)) throw new FunctionException(variableError);
         if (Postfix == null || Postfix.length() == 0) throw new FunctionException(noParsedExpressinoError);
 
         Double _value = (Double) values.get(key);
         double atValue1, atValue2, atValue3;
-        atValue1 = _value.doubleValue() - h;
-        atValue2 = _value.doubleValue();
-        atValue3 = _value.doubleValue() + h;
+        atValue1 = _value - h;
+        atValue2 = _value;
+        atValue3 = _value + h;
 
         values.remove(key);
-        values.put(key, new Double(atValue1));
+        values.put(key, atValue1);
         double valueAt1 = evaluator(values);
 
         values.remove(key);
-        values.put(key, new Double(atValue2));
+        values.put(key, atValue2);
         double valueAt2 = evaluator(values);
 
         values.remove(key);
-        values.put(key, new Double(atValue3));
+        values.put(key, atValue3);
         double valueAt3 = evaluator(values);
 
         double result = (valueAt1 - (2 * valueAt2) + valueAt3) / (h * h);

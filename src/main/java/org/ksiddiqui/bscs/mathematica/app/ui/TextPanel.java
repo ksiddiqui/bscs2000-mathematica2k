@@ -80,11 +80,11 @@ public class TextPanel extends JPanel {
     private void addTextToList(String str, int x, int y, Color c, Font f, int dist) {
         Object[] obj = new Object[6];
         obj[0] = str;
-        obj[1] = new Integer(x);
-        obj[2] = new Integer(y);
+        obj[1] = x;
+        obj[2] = y;
         obj[3] = c;
         obj[4] = f;
-        obj[5] = new Integer(dist);
+        obj[5] = dist;
 
         if (strListSize == 0) strList.addElement(obj);
         else {
@@ -92,7 +92,7 @@ public class TextPanel extends JPanel {
             int i;
             for (i = 0; i < strListSize; i++) {
                 object = (Object[]) strList.elementAt(i);
-                if (((Integer) object[5]).intValue() > dist) break;
+                if ((Integer) object[5] > dist) break;
             }
             strList.insertElementAt(obj, i);
         }
@@ -138,7 +138,8 @@ public class TextPanel extends JPanel {
 
 
     public void delText(String str) throws Exception {
-        if (strListSize == 0) throw new Exception("Cannot delete in empty list...");
+        if (strListSize == 0)
+            throw new Exception("Cannot delete in empty list...");
 
         if (str == null) {
             strList.removeAllElements();
@@ -146,13 +147,12 @@ public class TextPanel extends JPanel {
         } else {
             delTextFromList(str);
         }
-
-        return;
     }
 
 
     public void delText(String[] str) throws Exception {
-        if (strListSize == 0) throw new Exception("Cannot delete in empty list...");
+        if (strListSize == 0)
+            throw new Exception("Cannot delete in empty list...");
 
         if (str == null) {
             strList.removeAllElements();
@@ -160,8 +160,6 @@ public class TextPanel extends JPanel {
         } else {
             for (int i = 0; i < str.length; i++) delTextFromList(str[i]);
         }
-
-        return;
     }
 
 
@@ -192,23 +190,21 @@ public class TextPanel extends JPanel {
         for (int i = 0; i < strListSize; i++) {
             obj = (Object[]) strList.elementAt(i);
 
-            x = ((Integer) obj[1]).intValue();
-            y = ((Integer) obj[2]).intValue();
-            d = ((Integer) obj[5]).intValue();
+            x = (Integer) obj[1];
+            y = (Integer) obj[2];
+            d = (Integer) obj[5];
 
             if (obj[4] != null) g.setFont((Font) obj[4]);
             else g.setFont(defaultFont);
 
             g.setColor(shadowLColor);
-//                g.setXORMode(shadowDColor);                
             g.drawString((String) obj[0], x + (d * shadowX), y + (d * shadowY));
 
-//                g.setPaintMode();
-            if (obj[3] != null) g.setColor((Color) obj[3]);
-            else g.setColor(defaultColor);
+            if (obj[3] != null)
+                g.setColor((Color) obj[3]);
+            else
+                g.setColor(defaultColor);
             g.drawString((String) obj[0], x, y);
         }
     }
-
-
 }

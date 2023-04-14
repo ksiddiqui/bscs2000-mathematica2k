@@ -5,11 +5,6 @@ import org.ksiddiqui.bscs.mathematica.maths.exceptions.InterpolationSolverExcept
 import java.io.Serializable;
 import java.util.Vector;
 
-//import FunctionGrapher;
-//import LinearSystemSolver;
-//import Function;
-//import DivideDifference;
-
 /******************************************************************************************
  *                                                                                         *
  *       Interpolation Solver class ..........                                             *
@@ -18,11 +13,11 @@ import java.util.Vector;
 
 
 public class InterpolationSolver implements Serializable {
-    final String incompleteDataError = "Incomplete data Error";
-    final String invalidItemError = "Invalid data item Error";
-    final String insufficientDataError = "Insufficient data Error";
-    final String unknownError = "Unknown Error";
-    final String deadLockError = "Calculation DEADLOCK .... Either\n -Infinity approached\n -Complex number evaluated\nTry another interval...";
+    public final String incompleteDataError = "Incomplete data Error";
+    public final String invalidItemError = "Invalid data item Error";
+    public final String insufficientDataError = "Insufficient data Error";
+    public final String unknownError = "Unknown Error";
+    public final String deadLockError = "Calculation DEADLOCK .... Either\n -Infinity approached\n -Complex number evaluated\nTry another interval...";
 
     private double[] x, Fx;
     private String function;
@@ -188,7 +183,8 @@ public class InterpolationSolver implements Serializable {
 
         Function tmp = new Function(func);
         result = tmp.evaluator(var, val);
-        if (Double.isInfinite(result) || Double.isNaN(result)) throw new Exception(deadLockError);
+        if (Double.isInfinite(result) || Double.isNaN(result))
+            throw new Exception(deadLockError);
 
         if (isRendering && fg != null) fg.drawGraph(func, x[x1], x[x2]);
 
@@ -198,7 +194,8 @@ public class InterpolationSolver implements Serializable {
     private Vector addToTable(Vector table, double[] values) {
         Double[] obj = new Double[values.length];
 
-        for (int i = 0; i < values.length; i++) obj[i] = new Double(values[i]);
+        for (int i = 0; i < values.length; i++)
+            obj[i] = values[i];
         table.addElement(obj);
         return table;
     }
@@ -255,9 +252,11 @@ public class InterpolationSolver implements Serializable {
 
         Function tmp = new Function(func);
         result = tmp.evaluator(var, val);
-        if (Double.isInfinite(result) || Double.isNaN(result)) throw new Exception(deadLockError);
+        if (Double.isInfinite(result) || Double.isNaN(result))
+            throw new Exception(deadLockError);
 
-        if (isRendering && fg != null) fg.drawGraph(func, x[x1], x[x2]);
+        if (isRendering && fg != null)
+            fg.drawGraph(func, x[x1], x[x2]);
 
         return result;
     }

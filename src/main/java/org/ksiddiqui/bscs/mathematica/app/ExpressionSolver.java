@@ -100,9 +100,9 @@ public class ExpressionSolver {
 
         for (int count = 1; count < (totalChars - 1); count++) {
             tmpChar = infixCopy[count];
-            str1 = new Character(infixCopy[count - 1]).toString();
-            str2 = new Character(infixCopy[count + 0]).toString();
-            str3 = new Character(infixCopy[count + 1]).toString();
+            str1 = Character.toString(infixCopy[count - 1]);
+            str2 = Character.toString(infixCopy[count]);
+            str3 = Character.toString(infixCopy[count + 1]);
 
 
             if (tmpChar == '(') {
@@ -110,19 +110,19 @@ public class ExpressionSolver {
                 opStack[stackTop] = tmpChar;
             } else if (tmpChar == ')') {
                 while (opStack[stackTop] != '(') {
-                    Postfix = Postfix.concat(new Character(opStack[stackTop]).toString());
+                    Postfix = Postfix.concat(Character.toString(opStack[stackTop]));
                     stackTop--;
                 }
                 stackTop--;
             } else if (tmpChar == '-' && (count == 1 || operators.indexOf(str1) != -1 || infixCopy[count - 1] == '(')) {
                 negFlag = true;
             } else if (operands.indexOf(str2) != -1) {
-                number = number.concat(new Character(tmpChar).toString());
+                number = number.concat(Character.toString(tmpChar));
                 if (operators.indexOf(str3) != -1 || totalChars == (count + 2) || infixCopy[count + 1] == '(' || infixCopy[count + 1] == ')') {
                     Numbers[NumberIndex] = Double.parseDouble(number);
                     NumberIndex++;
                     number = new String();
-                    Postfix = Postfix.concat(new Character(variable).toString());
+                    Postfix = Postfix.concat(Character.toString(variable));
                     variable++;
                     if (negFlag) {
                         Numbers[NumberIndex - 1] = Numbers[NumberIndex - 1] * (-1);
@@ -131,14 +131,14 @@ public class ExpressionSolver {
                 }
             } else if (operators.indexOf(str2) != -1) {
                 pre1 = Precession(str2);
-                if (stackTop > -1) pre2 = Precession(new Character(opStack[stackTop]).toString());
+                if (stackTop > -1) pre2 = Precession(Character.toString(opStack[stackTop]));
                 else pre2 = 0;
 
                 while (pre1 < pre2 && stackTop > -1) {
-                    Postfix = Postfix.concat(new Character(opStack[stackTop]).toString());
+                    Postfix = Postfix.concat(Character.toString(opStack[stackTop]));
                     stackTop--;
                     if (stackTop > -1)
-                        pre2 = Precession(new Character(opStack[stackTop]).toString());
+                        pre2 = Precession(Character.toString(opStack[stackTop]));
                 }
                 stackTop++;
                 if (pre1 < 10) opStack[stackTop] = tmpChar;
@@ -171,7 +171,7 @@ public class ExpressionSolver {
         }
 
         while (stackTop > -1) {
-            Postfix = Postfix.concat(new Character(opStack[stackTop]).toString());
+            Postfix = Postfix.concat(Character.toString(opStack[stackTop]));
             stackTop--;
         }
         NumberElements = NumberIndex - 1;

@@ -93,7 +93,7 @@ public class DivideDifference implements Serializable {
         Double[] obj = new Double[values.length];
 
         for (int i = 0; i < values.length; i++)
-            obj[i] = new Double(values[i]);
+            obj[i] = values[i];
         difference.addElement(obj);
     }
 
@@ -208,11 +208,11 @@ public class DivideDifference implements Serializable {
     public double getDD(int i, int j) throws Exception {
         int num = Fx.length - 1;
 
-        if (i > num || j > (num - i) || i < 0 || j < 0) throw new DivideDifferenceException(DDElementError);
+        if (i > num || j > (num - i) || i < 0 || j < 0)
+            throw new DivideDifferenceException(DDElementError);
 
         Double[] obj = (Double[]) difference.get(j);
-
-        return obj[i].doubleValue();
+        return obj[i];
     }
 
 }

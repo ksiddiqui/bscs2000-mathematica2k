@@ -21,9 +21,9 @@ import java.io.Serializable;
 
 
 public class RootSolver implements Serializable {
-    final String invalidVariableError = "Invalid variable Found Error";
-    final String noVariableError = "No variable Found Error";
-    final String unknownError = "Unknown Error";
+    public final String invalidVariableError = "Invalid variable Found Error";
+    public final String noVariableError = "No variable Found Error";
+    public final String unknownError = "Unknown Error";
 
 
     private Function function = null;
@@ -271,10 +271,13 @@ public class RootSolver implements Serializable {
         double fa = a + 1, b;
         int index = foundVariableIndex();
 
-        if (variables.length == 0) throw new RootSolverException(noVariableError);
-        if (index == -1) throw new RootSolverException(invalidVariableError);
+        if (variables.length == 0)
+            throw new RootSolverException(noVariableError);
+        if (index == -1)
+            throw new RootSolverException(invalidVariableError);
 
-        if (isRendering) setPanel("Fixed Point Iterative Method | f: " + function.toString());
+        if (isRendering)
+            setPanel("Fixed Point Iterative Method | f: " + function.toString());
 
         values[index] = a;
         fa = function.evaluator(variables, values);
@@ -300,10 +303,13 @@ public class RootSolver implements Serializable {
         double fa, _fa, fc, c;
         int index = foundVariableIndex();
 
-        if (variables.length == 0) throw new RootSolverException(noVariableError);
-        if (index == -1) throw new RootSolverException(invalidVariableError);
+        if (variables.length == 0)
+            throw new RootSolverException(noVariableError);
+        if (index == -1)
+            throw new RootSolverException(invalidVariableError);
 
-        if (isRendering) setPanel("Newton's Method | f: " + function.toString());
+        if (isRendering)
+            setPanel("Newton's Method | f: " + function.toString());
 
         values[index] = a;
         fa = function.evaluator(variables, values);
@@ -339,8 +345,10 @@ public class RootSolver implements Serializable {
         double b, c, d = a, fd = d + 1;
         int index = foundVariableIndex();
 
-        if (variables.length == 0) throw new RootSolverException(noVariableError);
-        if (index == -1) throw new RootSolverException(invalidVariableError);
+        if (variables.length == 0)
+            throw new RootSolverException(noVariableError);
+        if (index == -1)
+            throw new RootSolverException(invalidVariableError);
 
         if (isRendering) setPanel("Steffensen's Method | f: " + function.toString());
 
@@ -365,11 +373,6 @@ public class RootSolver implements Serializable {
 
         return d;
     }
-/*
-        public double mullerMethod(double a, double b, double c) throws Exception
-          {
-          }
-*/
 
     public boolean getRendering() {
         return isRendering;
@@ -388,6 +391,7 @@ public class RootSolver implements Serializable {
             frame = new JFrame("Sequence Generator");
 
             frame.addWindowListener(new WindowAdapter() {
+                @Override
                 public void windowClosing(WindowEvent e) {
                     endSeqRendering();
                 }
@@ -422,9 +426,9 @@ public class RootSolver implements Serializable {
 
     private void renderIteration(int i, double x, double Fx) {
         Object[] rowObjects = new Object[3];
-        rowObjects[0] = new Integer(i);
-        rowObjects[1] = new Double(x);
-        rowObjects[2] = new Double(Fx);
+        rowObjects[0] = i;
+        rowObjects[1] = x;
+        rowObjects[2] = Fx;
 
         seqTableModel.addRow(rowObjects);
     }

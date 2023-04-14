@@ -363,7 +363,7 @@ public class InterpolationSolverAgent {
         for (int i = 0; i < xs.length; i++) dTableModel.addRow(new String[xs.length + 1]);
 
         Double[] values;
-        for (int i = xs[0]; i <= xs[xs.length - 1]; i++) dTableModel.setValueAt(new Double(x[i]), i - xs[0], 0);
+        for (int i = xs[0]; i <= xs[xs.length - 1]; i++) dTableModel.setValueAt(x[i], i - xs[0], 0);
         for (int i = 0; i < nevilleTable.size(); i++) {
             values = (Double[]) nevilleTable.get(i);
             for (int j = 0; j < values.length; j++) {

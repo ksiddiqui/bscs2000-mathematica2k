@@ -68,7 +68,7 @@ public class FunctionGrapherPanel extends JPanel implements MouseListener, Mouse
         fg.currY.setText(s2);
 
         if (fg.markToggle.isSelected() && markerSheet == null) initMarkerSheet();
-        if (fg.markToggle.isSelected() && (e.getModifiers() == InputEvent.BUTTON1_MASK)) {
+        if (fg.markToggle.isSelected() && (e.getModifiersEx() == InputEvent.BUTTON1_MASK)) {
             int x2 = e.getX(), y2 = e.getY();
             if (isFirst) {
                 x1 = x2;
@@ -77,7 +77,7 @@ public class FunctionGrapherPanel extends JPanel implements MouseListener, Mouse
                 graph.drawLine(x1, y1, x2, y2);
             }
             isFirst = !isFirst;
-        } else if (fg.markToggle.isSelected() && (e.getModifiers() == InputEvent.BUTTON3_MASK)) {
+        } else if (fg.markToggle.isSelected() && (e.getModifiersEx() == InputEvent.BUTTON3_MASK)) {
             int x2 = e.getX(), y2 = e.getY();
             if (isFirst) {
                 x1 = x2;
@@ -120,8 +120,9 @@ public class FunctionGrapherPanel extends JPanel implements MouseListener, Mouse
         fg.currX.setText(s1);
         fg.currY.setText(s2);
 
-        if (fg.markToggle.isSelected() && markerSheet == null) initMarkerSheet();
-        if (fg.markToggle.isSelected() && (e.getModifiers() == InputEvent.BUTTON3_MASK)) {
+        if (fg.markToggle.isSelected() && markerSheet == null)
+            initMarkerSheet();
+        if (fg.markToggle.isSelected() && (e.getModifiersEx() == InputEvent.BUTTON3_MASK)) {
             int x2 = e.getX(), y2 = e.getY();
             if (!isDragged) {
                 dx = x2;

@@ -11,8 +11,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.Serializable;
 
-//import Matrix;
-
 /******************************************************************************************
  *                                                                                         *
  *       Linear Equation System Solver class ..........                                    *
@@ -21,9 +19,9 @@ import java.io.Serializable;
 
 
 public class LinearSystemSolver implements Serializable {
-    final String invalidVariableError = "Invalid variable Found Error";
-    final String noVariableError = "No variable Found Error";
-    final String unknownError = "Unknown Error";
+    public final String invalidVariableError = "Invalid variable Found Error";
+    public final String noVariableError = "No variable Found Error";
+    public final String unknownError = "Unknown Error";
 
 
     private double[][] coefficients;
@@ -179,9 +177,11 @@ public class LinearSystemSolver implements Serializable {
             }
             if (isSolution) break;
 
-            for (int i = 0; i < order; i++) valuesX[i] = values[i];
+            for (int i = 0; i < order; i++)
+                valuesX[i] = values[i];
             iterations++;
-            if (iterations > iterationsLimit) throw new LinearSystemSolverIterationsEndException();
+            if (iterations > iterationsLimit)
+                throw new LinearSystemSolverIterationsEndException();
         }
 
         return values;
@@ -237,7 +237,8 @@ public class LinearSystemSolver implements Serializable {
             if (isSolution) break;
 
             iterations++;
-            if (iterations > iterationsLimit) throw new LinearSystemSolverIterationsEndException();
+            if (iterations > iterationsLimit)
+                throw new LinearSystemSolverIterationsEndException();
         }
 
         return values;
@@ -279,9 +280,9 @@ public class LinearSystemSolver implements Serializable {
     public void setPanel(String str, int cols) {
         cols++;
         String[] columns = new String[cols];
-        columns[0] = new String("#");
+        columns[0] = "#";
         for (int i = 1; i < cols; i++)
-            columns[i] = new String("x" + Integer.toString(i));
+            columns[i] = "x" + Integer.toString(i);
 
         seqTableModel = new DefaultTableModel(columns, 0);
         seqTable = new JTable(seqTableModel);
@@ -300,9 +301,9 @@ public class LinearSystemSolver implements Serializable {
 
     private void renderIteration(int i, double[] x) {
         Object[] rowObjects = new Object[x.length + 1];
-        rowObjects[0] = new Integer(i);
+        rowObjects[0] = i;
         for (int j = 0; j < x.length; j++)
-            rowObjects[j + 1] = new Double(x[j]);
+            rowObjects[j + 1] = x[j];
 
         seqTableModel.addRow(rowObjects);
     }
